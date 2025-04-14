@@ -1,0 +1,19 @@
+RewriteEngine On
+
+#la regle vraiment necessaire
+# L : on ne passe pas a une autre regle si celle ci est validee
+# QSA si il y a des parametres de type ?xx=yy alors ils sont conservés
+# RewriteRule ^(.+)$ router.php [QSA,L]
+
+
+# Rediriger toutes les requêtes vers index.php sauf les fichiers et dossiers existants
+# Vérifie si la requête demandée n'est pas un fichier existant.
+# %{REQUEST_FILENAME} représente le chemin complet du fichier demandé sur le serveur.
+# !-f signifie "si ce n'est pas un fichier".
+# !-d signifie "si ce n'est pas un répertoire".
+RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ src/index.php?url=$1 [QSA,L]
+
+
+
