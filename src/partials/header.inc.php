@@ -10,7 +10,7 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="projectMenu">
                     <li><button class="dropdown-item" id="save-project">Enregistrer</button></li>
-                    <li><button class="dropdown-item" id="delete-project">Supprimer</button></li>
+                    <li><button class="dropdown-item" id="open-project">Ouvrir</button></li>
                     <li><button class="dropdown-item" id="cancel-edit">Annuler</button></li>
                 </ul>
             </div>
@@ -18,9 +18,9 @@
             <!-- Menu PROJET pour affichage Desktop -->
             <div class="d-flex align-items-center d-none d-md-flex">
                 <h1 class="h4">Créer un Nouveau Projet</h1>
-                <button class="btn btn-outline-primary ms-3" id="save-project">Enregistrer</button>
-                <button class="btn btn-outline-warning ms-2" id="cancel-edit">Annuler</button>
-                <button class="btn btn-outline-danger ms-2" id="delete-project">Supprimer</button>
+                <a href="<?=WEBAPP_ROOT ?>/saveSupProjet"><button class="btn btn-outline-primary ms-3" id="save-project">Enregistrer</button></a>
+                <a href="<?=WEBAPP_ROOT ?>/cancelSupProjet"><button class="btn btn-outline-warning ms-2" id="cancel-edit">Annuler</button></a>
+                <a href="<?=WEBAPP_ROOT ?>/getSupProjet"><button class="btn btn-outline-success ms-2" id="open-project">Ouvrir</button></a>
             </div>
 
             <!-- Mode sombre/clair -->

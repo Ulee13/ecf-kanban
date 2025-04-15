@@ -38,4 +38,16 @@ class KanbanCntrl{
     public function formCal() {
         include 'view/gestCal.php';
     }
+
+    public function saveSupProjet() {
+        //include 'view/gestCal.php';
+    }
+
+    public function cancelSupProjet() {
+       
+    }
+
+    public function getSupProjet() {
+        include 'view/listSupProjet.php';
+    }
 }
