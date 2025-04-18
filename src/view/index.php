@@ -1,12 +1,12 @@
 <?php
     $title = "Kanban Project Manager";
 
-    if (isset($_GET['ajax']) && $_GET['ajax'] === 'moduleForm') {
-        require_once __DIR__ . '/../controller/AjaxCntrl.php';
-        $ajax = new AjaxCntrl();
-        $ajax->loadModuleForm($_GET['module'] ?? '');
-        exit;
-    }
+    // if (isset($_GET['ajax']) && $_GET['ajax'] === 'moduleForm') {
+    //     require_once __DIR__ . '/../controller/AjaxCntrl.php';
+    //     $ajax = new AjaxCntrl();
+    //     $ajax->loadModuleForm($_GET['module'] ?? '');
+    //     exit;
+    // }
     
     // output buffering
     ob_start();

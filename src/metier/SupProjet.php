@@ -6,17 +6,17 @@ class SupProjet {
     private int $id_modulex;
     private int $id_projet;
     private string $id_supprojet;
-    private string $date_creation_supprojet;
+    private string $date_crea_supprojet;
     private string $coul_supprojet;
     private string $nom_module_projet;
     private int $id_icone;
 
     // Constructeur
-    public function __construct(int $id_modulex, int $id_projet, string $id_supprojet, string $date_creation_supprojet, string $coul_supprojet, string $nom_module_projet, int $id_icone) {
+    public function __construct(int $id_modulex, int $id_projet, string $id_supprojet, string $date_crea_supprojet, string $coul_supprojet, string $nom_module_projet, int $id_icone) {
         $this->id_modulex                   = $id_modulex;
         $this->id_projet                    = $id_projet;
         $this->id_supprojet                 = $id_supprojet;
-        $this->date_creation_supprojet      = $date_creation_supprojet;
+        $this->date_crea_supprojet          = $date_crea_supprojet;
         $this->coul_supprojet               = $coul_supprojet;
         $this->nom_module_projet            = $nom_module_projet;
         $this->id_icone                     = $id_icone;
@@ -35,8 +35,8 @@ class SupProjet {
         return $this->id_supprojet;
     }
 
-    public function getDateCreationSupprojet(): string {
-        return $this->date_creation_supprojet;
+    public function getDateCreaSupprojet(): string {
+        return $this->date_crea_supprojet;
     }
 
     public function getCoulSupprojet(): string {
@@ -64,8 +64,8 @@ class SupProjet {
         $this->id_supprojet = $id_supprojet;
     }
 
-    public function setDateCreationSupprojet(string $date_creation_supprojet): void {
-        $this->date_creation_supprojet = $date_creation_supprojet;
+    public function setDateCreaSupprojet(string $date_crea_supprojet): void {
+        $this->date_crea_supprojet = $date_crea_supprojet;
     }
 
     public function setCoulSupprojet(string $coul_supprojet): void {

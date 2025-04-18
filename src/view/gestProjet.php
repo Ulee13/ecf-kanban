@@ -1,5 +1,4 @@
-
-<form action="<?=WEBAPP_ROOT ?>/addProjet" method="post" role="form" class="project-form">
+-<form action="/addProjet" method="post" role="form" class="project-form">
 <form class="project-form">
     <div class="container-fluid">
         <div class="row mb-3">

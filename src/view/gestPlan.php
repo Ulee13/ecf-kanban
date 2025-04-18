@@ -1,4 +1,4 @@
-<form action="<?=WEBAPP_ROOT ?>/addPlan" method="post" role="form" class="planning-form">
+<form action="/addPlan" method="post" role="form" class="planning-form">
     <div class="mb-3">
         <label for="task-name" class="form-label">Nom de la Tâche</label>
         <input type="text" class="form-control" id="task-name">

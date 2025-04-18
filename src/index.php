@@ -10,6 +10,13 @@ $route = explode('?', $uri)[0]; // on enlève la partie après le ?
 $method = $_SERVER['REQUEST_METHOD']; // on récupère la méthode HTTP (GET, POST, PUT, DELETE, etc.)
 //echo $route . "--------------" . $method;
 
+if (isset($_GET['ajax']) && $_GET['ajax'] === 'moduleForm') {
+    $module = $_GET['module'] ?? '';
+    $ajaxCntrl = new AjaxCntrl();
+    $ajaxCntrl->loadModuleForm($module);
+    exit;
+}
+
 if (file_exists("./config/param.ini")) {
     $param = parse_ini_file("./config/param.ini", true);
     extract($param['WEBAPP']);
@@ -25,15 +32,18 @@ if ($method == 'GET') {
         $webapp_root                            => $cntrl->getIndex(),
         $webapp_root . '/'                      => $cntrl->getIndex(),
         $webapp_root . '/scr/index.php'         => $cntrl->getIndex(),
+        $webapp_root . '/getUser'               => $cntrl->getUser(),
+        $webapp_root . '/formUser'               => $cntrl->formUser(),
         $webapp_root . '/addProjet'             => $cntrl->formProjet(),
-        $webapp_root . '/addUser'               => $cntrl->formUser(),
         $webapp_root . '/addPlan'               => $cntrl->formPlan(),
         $webapp_root . '/addMess'               => $cntrl->formMess(),
         $webapp_root . '/addDoc'                => $cntrl->formDoc(),
         $webapp_root . '/addCal'                => $cntrl->formCal(),
         $webapp_root . '/saveSupProjet'         => $cntrl->saveSupProjet(),
         $webapp_root . '/cancelSupProjet'       => $cntrl->cancelSupProjet(),
-        $webapp_root . '/getSupProjet'         => $cntrl->getSupProjet(),
+        $webapp_root . '/getSupProjet'          => $cntrl->getSupProjet(),
+        $webapp_root . '/removeSupProjet'       => $cntrl->removeSupProjet(),
+        //$webapp_root . '/getSupProjet'         => $cntrl->listSupProjets(),
         // $webapp_root . '/categories'            => $cntrl->getCategories(),
         // $webapp_root . '/plats'                 => $cntrl->getPlats(),
         // $webapp_root . '/formplat'              => $cntrl->formPlat(),

@@ -1,4 +1,4 @@
-<form action="<?=WEBAPP_ROOT ?>/addCal" method="post" role="form" class="calendar-form">
+<form action="/addCal" method="post" role="form" class="calendar-form">
     <div class="mb-3">
         <label for="task-name" class="form-label">Nom du calendrier</label>
         <input type="text" class="form-control" id="task-name">

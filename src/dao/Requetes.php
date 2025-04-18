@@ -25,6 +25,9 @@ class Requetes {
     //  */
 
     //public const SUPPROJET_GET = "Select id_modulex, id_projet, id_supprojet, date_creation_supprojet, coul_supprojet, nom_module_projet, id_icone";
-    //public const SUPPROJET_GET_BY_ID = "Select categorie.idc, libellec, idp, libellep, prixp, compop, pathImgP from categorie JOIN plat ON categorie.idc=plat.idc where idp = :id";
-    public const SUPPROJETS_GET = "Select id_modulex, id_projet, id_supprojet, date_creation_supprojet, coul_supprojet, nom_module_projet, id_icone from supProjet order by id_supprojet";
+    public const SUPPROJETS_GET = "Select id_modulex, id_projet, id_supprojet, date_creation_supprojet, coul_supprojet, nom_module_projet, id_icone from SupProjet order by id_supprojet";
+    public const SUPPROJETS_GET_BY_ID = "Select id_modulex, id_projet, id_supprojet, date_creation_supprojet, coul_supprojet, nom_module_projet, id_icone from SupProjet order by id_supprojet";
+    public const USERS_GET = "SELECT id_user, username, nom_user, prenom_user, avatar_user, email_user, pass_word, date_creation FROM utilisateur";
+    public const SUPPROJET_REMOVE = "Delete from SupProjet where id_supprojet = :id";
+
 }
