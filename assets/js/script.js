@@ -1,7 +1,7 @@
-import { getUtilisateurs } from "./fonctionUtil.js";
-import { enregistrerProjet, getProjets } from "./dataModProjet.js";
-import { enregistrerRolesUtilisateurs, getUtilisateursEnregistres } from "./dataModUtilisateurs.js";
-import { validerFormulaireProjet, validerFormulaireUtilisateurs } from "./validation.js";
+// import { getUtilisateurs } from "./fonctionUtil.js";
+// import { enregistrerProjet, getProjets } from "./dataModProjet.js";
+// import { enregistrerRolesUtilisateurs, getUtilisateursEnregistres } from "./dataModUtilisateurs.js";
+// import { validerFormulaireProjet, validerFormulaireUtilisateurs } from "./validation.js";
 
 /* *********************************************************************************************************** */
 
@@ -143,23 +143,25 @@ function remplirSelectUtilisateurs() {
     });
 }
 
+
+/* EB Contrôle formulaire */
 // Ajout de l'écouteur d'événement au bouton "Valider"
-document.addEventListener("click", (event) => {
-    if (event.target.classList.contains("btn-success")) {
-        event.preventDefault(); // Empêche le comportement par défaut du bouton
-        const moduleElement = event.target.closest(".module-content");
-        if (moduleElement.querySelector("#project-name")) {
-            if (validerFormulaireProjet(moduleElement)) {
-                enregistrerProjet(moduleElement); // Enregistre les données du projet
-            }
-        } else {
-            if (validerFormulaireUtilisateurs(moduleElement)) {
-                enregistrerRolesUtilisateurs(); // Enregistre les rôles attribués aux utilisateurs
-            }
-        }
-        setTimeout(() => afficherConfirmation(), 300); // Affiche la modale avec un léger délai
-    }
-});
+// document.addEventListener("click", (event) => {
+//     if (event.target.classList.contains("btn-success")) {
+//         event.preventDefault(); // Empêche le comportement par défaut du bouton
+//         const moduleElement = event.target.closest(".module-content");
+//         if (moduleElement.querySelector("#project-name")) {
+//             if (validerFormulaireProjet(moduleElement)) {
+//                 enregistrerProjet(moduleElement); // Enregistre les données du projet
+//             }
+//         } else {
+//             if (validerFormulaireUtilisateurs(moduleElement)) {
+//                 enregistrerRolesUtilisateurs(); // Enregistre les rôles attribués aux utilisateurs
+//             }
+//         }
+//         setTimeout(() => afficherConfirmation(), 300); // Affiche la modale avec un léger délai
+//     }
+// });
 
 function afficherConfirmation() {
     console.log("Tentative d'affichage de la modale..."); // Vérification
