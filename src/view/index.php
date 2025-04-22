@@ -28,7 +28,7 @@
                     <div class="module" draggable="true" data-module-type="gestion_projet">
                         <div class="module-header d-flex align-items-center">
                             <i class="bi bi-kanban-fill"></i></i> <!-- Icône du module -->
-                            <span class="module-title ms-2">Gestion de Projet</span>
+                            <span class="module-title ms-2">Gestion de Projet *</span>
                         </div>
                         <div class="module-content" id="gestProjet" style="display: none;"></div> <!-- insertion du formulaire -->
                     </div>

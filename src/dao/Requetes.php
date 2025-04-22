@@ -23,7 +23,7 @@ class Requetes {
     //  * Récupérer la liste des colonnes
     //  * @return array
     //  */
-
+    public const PROJETS_GET = "SELECT id_projet, duree_projet, date_debut_projet, desc_projet, lib_projet, id_user FROM projet";
     //public const SUPPROJET_GET = "Select id_modulex, id_projet, id_supprojet, date_creation_supprojet, coul_supprojet, nom_module_projet, id_icone";
     public const SUPPROJETS_GET = "Select id_modulex, id_projet, id_supprojet, date_creation_supprojet, coul_supprojet, nom_module_projet, id_icone from SupProjet order by id_supprojet";
     public const SUPPROJETS_GET_BY_ID = "Select id_modulex, id_projet, id_supprojet, date_creation_supprojet, coul_supprojet, nom_module_projet, id_icone from SupProjet order by id_supprojet";

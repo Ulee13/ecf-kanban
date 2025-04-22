@@ -17,10 +17,10 @@
 
             <!-- Menu PROJET pour affichage Desktop -->
             <div class="d-flex align-items-center d-none d-md-flex">
-                <h1 class="h4">Créer un Nouveau Projet</h1>
+                <h1 class="h4">Manager ses Projets</h1>
+                <a href="<?=WEBAPP_ROOT ?>/getSupProjet"><button class="btn btn-outline-success ms-2" id="open-project">Ouvrir</button></a>
                 <a href="<?=WEBAPP_ROOT ?>/saveSupProjet"><button class="btn btn-outline-primary ms-3" id="save-project">Enregistrer</button></a>
                 <a href="<?=WEBAPP_ROOT ?>/cancelSupProjet"><button class="btn btn-outline-warning ms-2" id="cancel-edit">Annuler</button></a>
-                <a href="<?=WEBAPP_ROOT ?>/getSupProjet"><button class="btn btn-outline-success ms-2" id="open-project">Ouvrir</button></a>
             </div>
 
             <!-- Mode sombre/clair -->
@@ -28,6 +28,13 @@
                 <button class="btn btn-secondary btn-sm" id="toggle-theme">Mode Sombre</button>
             </div>
         </div>
+    </div>
+    <div class="row py-3">
+       <hr>
+       <h5><u>Pour créer un nouveau projet :</u></h5> 
+       <p>Faites glisser les Modules disponibles que vous souhaitez utiliser dans l'Espace Projet situé à droite.
+        <br>*<i>Le Module " Gestion de Projet" est obligatoire.</i>
+       </p>
     </div>
 </div>
 </header>

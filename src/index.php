@@ -33,8 +33,8 @@ if ($method == 'GET') {
         $webapp_root . '/'                      => $cntrl->getIndex(),
         $webapp_root . '/scr/index.php'         => $cntrl->getIndex(),
         $webapp_root . '/getUser'               => $cntrl->getUser(),
-        $webapp_root . '/formUser'               => $cntrl->formUser(),
-        $webapp_root . '/addProjet'             => $cntrl->formProjet(),
+        $webapp_root . '/getProjet'             => $cntrl->getProjets(),
+        $webapp_root . '/formUser'              => $cntrl->formUser(),
         $webapp_root . '/addPlan'               => $cntrl->formPlan(),
         $webapp_root . '/addMess'               => $cntrl->formMess(),
         $webapp_root . '/addDoc'                => $cntrl->formDoc(),
@@ -52,8 +52,11 @@ if ($method == 'GET') {
         // $webapp_root . '/removecategorie'       => $cntrl->removeCategorie(),
         default                                 => $cntrl->getIndex()
     };
-} else if ($method == 'POST') {
+} else if ($method == 'POST') { 
+
     match($route) {
+        $webapp_root . '/addProjet'             => $cntrl->addProjet(),
+
         // $webapp_root . '/addPlat'               => $cntrl->addPlat(),
         // $webapp_root . '/addCategorie'          => $cntrl->addCategorie(),
         default                                 => $cntrl->getIndex()

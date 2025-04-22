@@ -4,6 +4,8 @@ use kanban\dao\Database;
 use kanban\dao\Requetes;
 use kanban\metier\SupProjet;
 use kanban\metier\GetUser;
+use kanban\metier\Projet;
+
 class DaoKanban {
     private \PDO $conn;
     // je déclare le constructeur qui permet de regrouper les méthodes $conn et $requete
@@ -16,8 +18,6 @@ class DaoKanban {
      * @return array
      */
 
-    
-    
 // ***** Get ****** //
 
     public function getSupProjet() : array {
@@ -28,6 +28,7 @@ class DaoKanban {
         }
         return $supProjets;
     }
+    
     public function getUser() {
         $cursor = $this->conn->query(Requetes::USERS_GET);
         $users = array();
@@ -36,6 +37,16 @@ class DaoKanban {
             $users[] = new GetUser($row->id_user, $row->username, $row->nom_user, $row->prenom_user, $row->avatar_user, $row->email_user, $row->pass_word, $row->date_creation);
         }
         return $users;
+    }
+
+    // Récupérer la liste des projets
+    public function getProjets() : array {
+        $cursor = $this->conn->query(Requetes::PROJETS_GET);
+        $projets = array();
+        while ($row = $cursor->fetch(\PDO::FETCH_OBJ)) {
+            $projets[] = new Projet($row->duree_projet, $row->date_debut_projet, $row->desc_projet, $row->lib_projet, (int)$row->id_user);
+        } 
+        return $projets;
     }
 // ***** GetByID ****** //
 
@@ -48,7 +59,7 @@ class DaoKanban {
         return $supProjet;
     }
 
-    //supprime un SupProjet dans la BDD à partir de l'instance reçue en paramètre.
+//supprime un SupProjet dans la BDD à partir de l'instance reçue en paramètre.
     public function removeSupProjet(SupProjet $supProjet): void {
         $id_supprojet = $supProjet->getIdSupprojet();
         //$libellep = $supProjet->getLibelle();
@@ -60,4 +71,37 @@ class DaoKanban {
     }
 
 
+// ***** ADD ****** //
+// Ajoute un projet dans la BDD à partir de l'instance reçue en paramètre.
+    public function addProjet(Projet $projet): int {
+        //$id_projet = $projet->getIdProjet();
+        $duree_projet = $projet->getDureeProjet();
+        $date_debut_projet = $projet->getDateDebut();
+        $desc_projet = $projet->getDesc();
+        $lib_projet = $projet->getNomProjet();
+        $id_user = $projet->getIdUser();
+
+        // Prépare la requête d'insertion
+        $query  = $this->conn->prepare("INSERT INTO projet (duree_projet, date_debut_projet, desc_projet, lib_projet, id_user) VALUES (:duree_projet, :date_debut_projet, :desc_projet, :lib_projet, :id_user)");
+        
+        // Lie les paramètres
+        //$query->bindValue(':id_projet',          $id_projet,              \PDO::PARAM_INT);
+        $query->bindValue(':duree_projet',         $duree_projet,           \PDO::PARAM_STR);
+        $query->bindValue(':date_debut_projet',    $date_debut_projet,      \PDO::PARAM_STR);
+        $query->bindValue(':desc_projet',          $desc_projet,            \PDO::PARAM_STR);
+        $query->bindValue(':lib_projet',           $lib_projet,             \PDO::PARAM_STR);
+        $query->bindValue(':id_user',              $id_user,                \PDO::PARAM_INT);
+
+        // Exécute la requête
+        
+        if ($query->execute()) {
+            $id_projet = $this->conn->lastInsertId();
+            echo "Le projet a été ajouté avec succès.";
+        } else {
+            $id_projet=0;
+            echo "Erreur lors de l'ajout du projet.";
+        }
+        return $id_projet;
+
+    }
 }

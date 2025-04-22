@@ -4,6 +4,8 @@ use kanban\dao\DaoKanban;
 use kanban\dao\Requetes;
 use kanban\metier\SupProjet;
 use kanban\metier\GetUser;
+use kanban\metier\Message;
+use kanban\metier\Projet;
 
 
 class KanbanCntrl{
@@ -16,9 +18,23 @@ class KanbanCntrl{
         $this->dao = new DaoKanban();
     }
  
- // ***************************************************************** //   
+// ***************************************************************** //   
+// ***************************************************************** //   
+// ***** GET ****** //
 
-    public function getIndex() {
+    public function getSupProjetById($id_supprojet) {
+        $supProjet = $this->dao->getSupProjetById($id_supprojet);
+        include 'view/gestSupProjet.php';
+    }
+
+    public function getIcones() {
+        include 'view/gestIcone.php';
+    }
+
+    public function getCategories() {
+        include 'view/gestCategorie.php';
+    }
+ public function getIndex() {
         include 'view/index.php';
     }
 
@@ -51,26 +67,52 @@ class KanbanCntrl{
         //else include 'view/plats.php';
     }
 
+    public function getProjets() {
+        // récupérer les projets
+        $projets = $this->dao->getProjets();
+        include __DIR__ . '/../view/listProjet.php';
+    }
 
-    // public function removeSupProjet() {
-    //     // recevoir l'instruction donnée par le bouton supprimer
-    //     $id_supprojet = (isset($_GET['id'])) ? htmlspecialchars(trim($_GET['id'])) : '';
-    //     $message = '';
-    //     // on verifie si le supprojet est utilisé
+// ***************************************************************** //   
+// ***************************************************************** //   
+// ***** ADD ****** //
+    // ajouter un projet
+    public function addProjet() {
+        // Récupérer les données du formulaire
+        //$id_projet =            (isset($_POST['id-projet'])) ? htmlspecialchars(trim($_POST['id-projet'])) : '';
+        $lib_projet =           (isset($_POST['nom-projet'])) ? htmlspecialchars(trim($_POST['nom-projet'])) : '';
+        $id_user =              (isset($_POST['chef-projet'])) ? htmlspecialchars(trim($_POST['chef-projet'])) : '';
+        $email_user =           (isset($_POST['chef-projet-email'])) ? htmlspecialchars(trim($_POST['chef-projet-email'])) : '';
+        $date_debut_projet =    (isset($_POST['date-debut'])) ? htmlspecialchars(trim($_POST['date-debut'])) : '';
+        $duree_projet =         (isset($_POST['date-fin'])) ? htmlspecialchars(trim($_POST['date-fin'])) : '';
+        $desc_projet =          (isset($_POST['descrip-projet'])) ? htmlspecialchars(trim($_POST['descrip-projet'])) : '';
+        $message = '';
+
+        if (empty($lib_projet)) {
+            $message = Message::LIB_Existant->getMessage();
+        } else {
+            // transformer le $id en int
+            //$id_projet = (int)$id_projet;
+            $id_user = (int)$id_user;
+            
+            // Si Datas ok
+            $projet = new Projet($duree_projet, $date_debut_projet, $desc_projet, $lib_projet, $id_user);
         
-    //     $supProjet = $this->dao->getSupProjetById($id_supprojet);
-    //     // si ok, envoyer à Dao pour supprimer le supprojet dans la BDD
-    //     $this->dao->removeSupProjet($supProjet);
-    //     $supProjet = $this->dao->getSupProjet();
-    //     // si ok afficher liste des supprojets modifiées, sinon retour à la liste des supprojets
-    //     if (empty($message)) include 'view/listSupProjet.php';
-    //     //else include 'view/categories.php';
-    // }
-
+            // si ok, envoyer à Dao pour créer la catégorie dans la BDD
+            $id_projet= $this->dao->addProjet($projet);
+        }
+        // si ok : afficher liste des projets
+        if (empty($message)) $this->getProjets();
+        else include 'view/gestProjet.php';
+        // Rediriger vers la page de gestion des projets
+        header('Location: gestProjet');
+    }
 
 // ***************************************************************** //
 
     public function formProjet() {
+        // Récupérer les utilisateurs
+        $users = $this->dao->getUser();
         include __DIR__ . '/../view/gestProjet.php';
     }
 
