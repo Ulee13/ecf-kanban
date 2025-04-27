@@ -10,114 +10,39 @@
     
     // output buffering
     ob_start();
-        include 'partials/header.inc.php';
+        include __DIR__ . '/../partials/header.inc.php';
     $menubar = ob_get_clean();
 ?>
 
 <?php ob_start(); ?>
-    <div class="container-fluid">
-        <!-- Contenu principal -->
-        <div class="row mt-3">
-            <!-- *** Colonne gauche *** -->
-            <div class="col-3 border-end">
-                <h2 class="h5 p-3">Modules Disponibles</h2>
-                <!-- Colonne Modules disponibles -->
-                <div id="modules-list"> <!-- Affichage des Modules disponibles -->
 
-                    <!-- Module Projet -->
-                    <div class="module" draggable="true" data-module-type="gestion_projet">
-                        <div class="module-header d-flex align-items-center">
-                            <i class="bi bi-kanban-fill"></i></i> <!-- Icône du module -->
-                            <span class="module-title ms-2">Gestion de Projet *</span>
-                        </div>
-                        <div class="module-content" id="gestProjet" style="display: none;"></div> <!-- insertion du formulaire -->
-                    </div>
-                    
-                    <!-- Module Utilisateurs -->
-                    <div class="module" draggable="true" data-module-type="gestion_utilisateurs">
-                        <div class="module-header d-flex align-items-center">
-                            <i class="bi bi-people-fill"></i> <!-- Icône du module -->
-                            <span class="module-title ms-2">Gestion des Utilisateurs</span>
-                        </div>
-                        <div class="module-content" id="gestUser" style="display: none;"></div> <!-- insertion du formulaire -->
-                    </div>
-
-                    <!-- Module Plannification -->
-                    <div class="module" draggable="true" data-module-type="gestion_plannification">
-                        <div class="module-header d-flex align-items-center">
-                            <i class="bi bi-calendar-event-fill"></i> <!-- Icône du module -->
-                            <span class="module-title ms-2">Gestion de le Plannification</span>
-                        </div>
-                        <div class="module-content" id="gestPlan" style="display: none;"></div> <!-- inserion du formulaire -->
-                    </div>
-
-                    <!-- Module Messagerie -->
-                    <div class="module" draggable="true" data-module-type="gestion_messagerie">
-                        <div class="module-header d-flex align-items-center">
-                            <i class="bi bi-envelope-fill"></i> <!-- Icône du module -->
-                            <span class="module-title ms-2">Gestion de Messagerie</span>
-                        </div>
-                        <div class="module-content" id="gestMess" style="display: none;"></div> <!-- insertion du formulaire -->
-                    </div>
-
-                    <!-- Module Documents -->
-                    <div class="module" draggable="true" data-module-type="gestion_documents">
-                        <div class="module-header d-flex align-items-center">
-                            <i class="bi bi-folder-fill"></i></i> <!-- Icône du module -->
-                            <span class="module-title ms-2">Gestion des Documents</span>
-                        </div>
-                        <div class="module-content" id="gestDoc" style="display: none;"></div> <!-- insertion du formulaire -->
-                    </div>
-
-                    <!-- Module Calendrier -->
-                    <div class="module" draggable="true" data-module-type="gestion_calendrier">
-                        <div class="module-header d-flex align-items-center">
-                            <i class="bi bi-calendar3"></i> <!-- Icône du module -->
-                            <span class="module-title ms-2">Calendrier</span>
-                        </div>
-                        <div class="module-content" id="gestCal" style="display: none;"></div> <!-- insertion du formulaire -->
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- *** Colonne droite : Zone principale *** -->
-            <section class="col-9">
-                <h2 class="h5 p-3 text-md-start text-center">Espace du Projet</h2>
-                <div class="border rounded p-3" id="dropzone">
-                    <p class="text-muted">Glissez et déposez les modules ici</p>
-                    <div id="module-container">
-                        <!-- Zone vide où le module sera injecté -->
-                    </div> 
-                </div>
-            </section>
-        </div>
+<aside class="sidebar">
+<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
+    <span class="fs-4">Projets</span>
+    <hr>
+        <?php foreach ($supProjets as $supProjet) { ?>
+            <p><?= $supProjet->getIdSupprojets() ?></p>       
+        <?php } ?>
+    <hr>
+    <div class="nav">
+        <a href="#" class="btn btn-primary ms-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+            </svg>  
+            Nouveau projet
+        </a>
     </div>
+  </div>
+</aside>
 
-<!-- *** Modale *** -->
-    <!-- Fenêtre modale Bootstrap pour confirmation -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationModalLabel">Validation</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Les informations ont bien été enregistrées !
-                    <div id="project-details">
-                        <!-- Détails du projet seront insérés ici -->
-                    </div>
-                    <div id="user-details">
-                        <!-- Détails des utilisateurs seront insérés ici -->
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <article class="content">
+        <p><strong>1. Main Content</strong></p>
+        <a href="<?=WEBAPP_ROOT ?>/getSupProjet"><button class="btn btn-outline-success ms-2" id="open-project">Ouvrir</button></a>
+        
+
+        
+    </article>
+   
 
 
 <?php $content = ob_get_clean(); ?>

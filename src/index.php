@@ -33,7 +33,6 @@ if ($method == 'GET') {
         $webapp_root . '/'                      => $cntrl->getIndex(),
         $webapp_root . '/scr/index.php'         => $cntrl->getIndex(),
         $webapp_root . '/getUser'               => $cntrl->getUser(),
-        $webapp_root . '/getProjet'             => $cntrl->getProjets(),
         $webapp_root . '/formUser'              => $cntrl->formUser(),
         $webapp_root . '/addPlan'               => $cntrl->formPlan(),
         $webapp_root . '/addMess'               => $cntrl->formMess(),
@@ -42,7 +41,10 @@ if ($method == 'GET') {
         $webapp_root . '/saveSupProjet'         => $cntrl->saveSupProjet(),
         $webapp_root . '/cancelSupProjet'       => $cntrl->cancelSupProjet(),
         $webapp_root . '/getSupProjet'          => $cntrl->getSupProjet(),
+        $webapp_root . '/getSupProjets'         => $cntrl->getSupProjets(),
+        $webapp_root . '/getProjet'             => $cntrl->getProjets(),
         $webapp_root . '/removeSupProjet'       => $cntrl->removeSupProjet(),
+        $webapp_root . '/removeProjet'          => $cntrl->removeProjet(),
         //$webapp_root . '/getSupProjet'         => $cntrl->listSupProjets(),
         // $webapp_root . '/categories'            => $cntrl->getCategories(),
         // $webapp_root . '/plats'                 => $cntrl->getPlats(),
@@ -56,6 +58,7 @@ if ($method == 'GET') {
 
     match($route) {
         $webapp_root . '/addProjet'             => $cntrl->addProjet(),
+        $webapp_root . '/addSupProjet'             => $cntrl->addSupProjet(),
 
         // $webapp_root . '/addPlat'               => $cntrl->addPlat(),
         // $webapp_root . '/addCategorie'          => $cntrl->addCategorie(),

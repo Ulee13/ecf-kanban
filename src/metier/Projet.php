@@ -12,7 +12,7 @@ class Projet {
 
 
     // Constructeur
-    public function __construct(string $duree_projet, string $date_debut_projet, string $desc_projet, string $lib_projet, int $id_user, int $id_projet=0 ) {
+    public function __construct(string $duree_projet, string $date_debut_projet, string $desc_projet, string $lib_projet, int $id_user, int $id_projet=0) {
         $this->id_projet = $id_projet;
         $this->duree_projet = $duree_projet;
         $this->date_debut_projet = $date_debut_projet;

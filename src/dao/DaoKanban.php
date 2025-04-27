@@ -28,6 +28,15 @@ class DaoKanban {
         }
         return $supProjets;
     }
+
+    public function getSupProjets() : array {
+        $cursor = $this->conn->query(Requetes::SUPPROJETSLIST_GET);
+        $supProjets = array();
+        while ($row = $cursor->fetch(\PDO::FETCH_OBJ)) {
+            $supProjets[] = new SupProjet($row->id_modulex, $row->id_projet, $row->id_supprojet, $row->date_creation_supprojet, $row->coul_supprojet, $row->nom_module_projet, $row->id_icone);
+        }
+        return $supProjets;
+    }
     
     public function getUser() {
         $cursor = $this->conn->query(Requetes::USERS_GET);
@@ -42,12 +51,13 @@ class DaoKanban {
     // Récupérer la liste des projets
     public function getProjets() : array {
         $cursor = $this->conn->query(Requetes::PROJETS_GET);
-        $projets = array();
+        $projets = [];
         while ($row = $cursor->fetch(\PDO::FETCH_OBJ)) {
-            $projets[] = new Projet($row->duree_projet, $row->date_debut_projet, $row->desc_projet, $row->lib_projet, (int)$row->id_user);
+            $projets[] = new Projet($row->duree_projet, $row->date_debut_projet, $row->desc_projet, $row->lib_projet, (int)$row->id_user, (int)$row->id_projet);
         } 
         return $projets;
     }
+
 // ***** GetByID ****** //
 
     public function getSupProjetById($id_supprojet) {
@@ -59,6 +69,30 @@ class DaoKanban {
         return $supProjet;
     }
 
+    public function getProjetById($id_projet) {
+        $cursor = $this->conn->prepare(Requetes::PROJETS_GET_BY_ID);
+        $cursor->bindValue(':id', $id_projet, \PDO::PARAM_INT); // Ajout de la liaison du paramètre
+        $cursor->execute();
+        $row = $cursor->fetch(\PDO::FETCH_OBJ);
+    
+        if ($row) {
+            $projet = new Projet(
+                $row->duree_projet,
+                $row->date_debut_projet,
+                $row->desc_projet,
+                $row->lib_projet,
+                (int)$row->id_user, // Conversion explicite en entier
+                (int)$row->id_projet // Conversion explicite en entier
+            );
+            return $projet;
+        }
+    
+        return null; // Retournez null si aucun projet n'est trouvé
+    }
+    
+
+// ***** Remove ****** //
+
 //supprime un SupProjet dans la BDD à partir de l'instance reçue en paramètre.
     public function removeSupProjet(SupProjet $supProjet): void {
         $id_supprojet = $supProjet->getIdSupprojet();
@@ -68,6 +102,39 @@ class DaoKanban {
         //$query->bindValue('id',            $id_supprojet,             \PDO::PARAM_INT);
         $response = $query->execute();  // response = 1 (true) si OK
         
+    }
+
+//supprime un projet dans la BDD à partir de l'instance reçue en paramètre.
+    public function removeProjet(Projet $projet): void {
+        $id = $projet->getIdProjet();
+    
+        // Vérifie si des SupProjets sont associés au projet
+        $query = $this->conn->prepare(Requetes::SUPPROJETS_GET_BY_PROJET);
+        $query->bindValue(':id', $id, \PDO::PARAM_INT);
+        $query->execute();
+        $supProjets = $query->fetchAll(\PDO::FETCH_ASSOC);
+    
+        echo "SupProjets trouvés : " . count($supProjets) . "\n";
+        
+        // Supprime tous les SupProjets associés
+        if (!empty($supProjets)) {
+            $query = $this->conn->prepare(Requetes::SUPPROJETPRO_REMOVE);
+            $query->bindValue(':id', $id, \PDO::PARAM_INT);
+            if ($query->execute()) {
+                echo "SupProjets supprimés.\n";
+            } else {
+                echo "Erreur lors de la suppression des SupProjets.\n";
+            }
+        }
+    
+        // Supprime le projet
+        $query = $this->conn->prepare(Requetes::PROJET_REMOVE);
+        $query->bindValue(':id', $id, \PDO::PARAM_INT);
+        if ($query->execute()) {
+            echo "Projet supprimé.\n";
+        } else {
+            echo "Erreur lors de la suppression du projet.\n";
+        }
     }
 
 
