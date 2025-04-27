@@ -23,8 +23,6 @@
         justify-content: center;
     }
 
-
-
 /* Applique les styles de base aux modules interactifs affichés dans la colonne de gauche et dans la zone projet. */
     .module {
     /* display: flex; */
@@ -239,5 +237,3 @@ body.dark-mode .modal-body {
     transition: opacity 1.5s ease, transform 1s ease;
     transform: scale(0.8);
   }
-
-
