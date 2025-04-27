@@ -17,6 +17,7 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'moduleForm') {
     exit;
 }
 
+
 if (file_exists("./config/param.ini")) {
     $param = parse_ini_file("./config/param.ini", true);
     extract($param['WEBAPP']);
@@ -41,7 +42,6 @@ if ($method == 'GET') {
         $webapp_root . '/saveSupProjet'         => $cntrl->saveSupProjet(),
         $webapp_root . '/cancelSupProjet'       => $cntrl->cancelSupProjet(),
         $webapp_root . '/getSupProjet'          => $cntrl->getSupProjet(),
-        $webapp_root . '/getSupProjets'         => $cntrl->getSupProjets(),
         $webapp_root . '/getProjet'             => $cntrl->getProjets(),
         $webapp_root . '/removeSupProjet'       => $cntrl->removeSupProjet(),
         $webapp_root . '/removeProjet'          => $cntrl->removeProjet(),
@@ -57,8 +57,13 @@ if ($method == 'GET') {
 } else if ($method == 'POST') { 
 
     match($route) {
-        $webapp_root . '/addProjet'             => $cntrl->addProjet(),
-        $webapp_root . '/addSupProjet'             => $cntrl->addSupProjet(),
+        // $webapp_root . '/addProjet'             => $cntrl->addProjet(),
+        // $webapp_root . '/addSupProjet'          => $cntrl->addSupProjet(),
+        // $webapp_root . '/addUser'               => $cntrl->addUser(),
+
+        $webapp_root . '/addProjet' => method_exists($cntrl, 'addProjet') ? $cntrl->addProjet() : throw new \Exception("Méthode non trouvée"),
+        $webapp_root . '/addSupProjet' => method_exists($cntrl, 'addSupProjet') ? $cntrl->addSupProjet() : throw new \Exception("Méthode non trouvée"),
+        $webapp_root . '/addUser' => method_exists($cntrl, 'addUser') ? $cntrl->addUser() : throw new \Exception("Méthode non trouvée"),
 
         // $webapp_root . '/addPlat'               => $cntrl->addPlat(),
         // $webapp_root . '/addCategorie'          => $cntrl->addCategorie(),

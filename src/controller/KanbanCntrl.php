@@ -6,6 +6,7 @@ use kanban\metier\SupProjet;
 use kanban\metier\GetUser;
 use kanban\metier\Message;
 use kanban\metier\Projet;
+use kanban\metier\User;
 
 
 class KanbanCntrl{
@@ -24,24 +25,24 @@ class KanbanCntrl{
 
     public function getSupProjetById($id_supprojet) {
         $supProjet = $this->dao->getSupProjetById($id_supprojet);
-        include __DIR__ . '/../view/gestSupProjet.php';
+        include 'view/gestSupProjet.php';
     }
 
     public function getProjetById($id_projet) {
         $Projet = $this->dao->getSupProjetById($id_projet);
-        include __DIR__ . '/../view/gestProjet.php';
+        include 'view/gestProjet.php';
     }
 
     public function getIcones() {
-        include __DIR__ . '/../view/gestIcone.php';
+        include 'view/gestIcone.php';
     }
 
     public function getCategories() {
-        include __DIR__ . '/../view/gestCategorie.php';
+        include 'view/gestCategorie.php';
     }
 
      public function getIndex() {
-        include __DIR__ . '/../view/index.php';
+        include 'view/index.php';
     }
 
     public function getIndexLaunch() {
@@ -50,18 +51,14 @@ class KanbanCntrl{
     
     public function getSupProjet() {
         $supProjets = $this->dao->getSupProjet();
-        include __DIR__ . '/../view/listSupProjet.php';
-    }
-    
-    public function getSupProjets() {
-        $supProjets = $this->dao->getSupProjets();
-        include __DIR__ . '/../view/listSupProjets.php';
+        include 'view/listSupProjet.php';
     }
 
     public function getUser() {
         $users = $this->dao->getUser(); // Récupère les utilisateurs
         include __DIR__ . '/../view/gestUser.php'; // Inclut la vue
     }
+
 
     public function removeSupProjet() {
         // recevoir l'instruction donnée par le bouton supprimer de la vue listSupProjet.php
@@ -74,8 +71,8 @@ class KanbanCntrl{
         $dao->removeSupProjet($supProjet);
         $supProjets = $dao->getSupProjet();
         // si ok afficher liste des SupProjets modifiés, sinon retour à la liste des SupProjets
-        if (empty($message)) include __DIR__ . '/../view/listSupProjet.php';
-        //else include __DIR__ . '/../view/plats.php';
+        if (empty($message)) include 'view/listSupProjet.php';
+        //else include 'view/plats.php';
     }
 
     public function removeProjet() {
@@ -97,13 +94,13 @@ class KanbanCntrl{
         }
         // Récupérer la liste des projets après suppression
         $projets = $this->dao->getProjets();
-        include __DIR__ . '/../view/listProjet.php';
+        include 'view/listProjet.php';
     }
 
     public function getProjets() {
         // récupérer les projets
         $projets = $this->dao->getProjets();
-        include __DIR__ . '/../view/listProjet.php';
+        include 'view/listProjet.php';
     }
 
 // ***************************************************************** //   
@@ -137,7 +134,7 @@ class KanbanCntrl{
         }
         // si ok : afficher liste des projets
         if (empty($message)) $this->getProjets();
-        else include __DIR__ . '/../view/gestProjet.php';
+        else include 'view/gestProjet.php';
         // Rediriger vers la page de gestion des projets
         header('Location: gestProjet');
     }
@@ -169,40 +166,59 @@ class KanbanCntrl{
         }
         // si ok : afficher liste des projets
         if (empty($message)) $this->getProjets();
-        else include __DIR__ . '/../view/gestProjet.php';
+        else include 'view/gestProjet.php';
         // Rediriger vers la page de gestion des projets
         header('Location: gestProjet');
     }
 
-    // public function addSupProjet() {
-    //     // récupérer les data du formulaire
-    //     $id = (isset($_POST['id_supprojet'])) ? htmlspecialchars(trim($_POST['id_supprojet'])) : '';
-    //     //$libelle = (isset($_POST['libelle'])) ? htmlspecialchars(trim($_POST['libelle'])) : '';
-    //     $message = '';
-    //     // se poser la question que récupère t'on si on cherche une clé qui n'existe pas ?
-    //     //$truc = htmlspecialchars(trim($_POST['truc']));
-    //     // controler les datas
-    //     if (empty($id)) $message = Message::ID_Invalide->getMessage();
-    //     else {
-    //         try {
-    //             $id = (int)$id;
-    //             // Si Datas ok
-    //             $supProjet = new SupProjet($id_modulex, $id_projet, $id_supprojet, $date_creation_supprojet, $coul_supprojet, $nom_module_projet, $id_icone);
-    //             // si ok, envoyer à Dao pour créer la catégorie dans la BDD
-                
-    //             $this->dao->addSupProjet($supProjet);
-    //         }
-    //         catch (\Exception $e) {
-    //             $message = $e->getMessage();
-    //         }
-    //         // transformer le $id en int
-            
-    //     }
-    //     // si ok afficher liste des catégories
-    //     if (empty($message)) $this->getSupProjets();
-    //     else include __DIR__ . '/../view/gestProjet.php';
-    // }
+// ajouter un user
+public function addUser() {
+    error_log("addUser called");
+    // Récupérer les données du formulaire
+    //$id_projet =            (isset($_POST['id-projet'])) ? htmlspecialchars(trim($_POST['id-projet'])) : '';
+    //$id_user =              (isset($_POST['id-user'])) ? htmlspecialchars(trim($_POST['id-user'])) : '';
+    $username =             (isset($_POST['username'])) ? htmlspecialchars(trim($_POST['username'])) : '';
+    $nom_user =             (isset($_POST['nom-user'])) ? htmlspecialchars(trim($_POST['nom-user'])) : '';
+    $prenom_user =          (isset($_POST['prenom-user'])) ? htmlspecialchars(trim($_POST['prenom-user'])) : '';
+    $avatar_user =          (isset($_POST['avatar-user'])) ? htmlspecialchars(trim($_POST['avatar-user'])) : '';
+    $email_user =           (isset($_POST['email-user'])) ? htmlspecialchars(trim($_POST['email-user'])) : '';
+    $pass_word =            (isset($_POST['pass-word'])) ? htmlspecialchars(trim($_POST['pass-word'])) : '';
+    $date_creation =        (isset($_POST['date-creation'])) ? htmlspecialchars(trim($_POST['date-creation'])) : '';
+    //$id_secteur =           (isset($_POST['id-secteur'])) ? htmlspecialchars(trim($_POST['id-secteur'])) : '';
+    $message = '';
 
+    if (empty($username)) {
+        $message = Message::USERNAME_Existant->getMessage();
+    } else {
+        //$id_user = (int)$id_user;
+        
+        // Si Datas ok
+        $user = new User(0, $username, $nom_user, $prenom_user, $avatar_user, $email_user, $pass_word, $date_creation, 0);
+    
+        // si ok, envoyer à Dao pour créer l'utilisateur' dans la BDD
+        $id_user= $this->dao->addUser($user);
+        if ($id_user > 0) {
+            $message = "Utilisateur ajouté avec succès.";
+        } else {
+            $message = "Erreur lors de l'ajout de l'utilisateur.";
+        }
+    }
+    // si ok : afficher liste des projets
+    if (empty($message)) {
+        $this->getUsers();
+    } else {
+        include __DIR__ . '/../view/gestUser.php';
+        }
+    // Rediriger vers la page de gestion des projets
+    header('Location: gestUser');
+    exit;
+}
+
+public function getUsers() {
+    // récupérer les projets
+    $id_user = $this->dao->getUsers();
+    include __DIR__ . '/../view/listUser.php';
+}
 // ***************************************************************** //
 // ***************************************************************** //
 // ***************************************************************** //
@@ -223,19 +239,19 @@ class KanbanCntrl{
     }
 
     public function formMess() {
-        include __DIR__ . '/../view/gestMess.php';
+        include 'view/gestMess.php';
     }
 
     public function formDoc() {
-        include __DIR__ . '/../view/gestDoc.php';
+        include 'view/gestDoc.php';
     }
 
     public function formCal() {
-        include __DIR__ . '/../view/gestCal.php';
+        include 'view/gestCal.php';
     }
 
     public function saveSupProjet() {
-        //include __DIR__ . '/../view/gestCal.php';
+        //include 'view/gestCal.php';
     }
 
     public function cancelSupProjet() {

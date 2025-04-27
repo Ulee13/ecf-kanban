@@ -47,4 +47,4 @@
     </div>
 
 <?php $content = ob_get_clean(); ?>
-<?php include './base.php'; ?>
+<?php include 'view/base.php'; ?>

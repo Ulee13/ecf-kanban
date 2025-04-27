@@ -3,13 +3,12 @@
 
     // output buffer
     ob_start();
-        include __DIR__ . '/../partials/header.inc.php';
+        include 'partials/header.inc.php';
     $menubar = ob_get_clean();
 ?>
 
 <?php ob_start(); ?>
     <div class="container">
-        <h1>Liste de SupProjet</h1>
         <table class="table table-striped">
             <thead class="thead-light">
                 <tr>
@@ -44,4 +43,4 @@
     </div>
 
 <?php $content = ob_get_clean(); ?>
-<?php include __DIR__ . '/base.php'; ?>
+<?php include 'view/base.php'; ?>

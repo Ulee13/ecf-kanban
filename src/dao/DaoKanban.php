@@ -5,6 +5,7 @@ use kanban\dao\Requetes;
 use kanban\metier\SupProjet;
 use kanban\metier\GetUser;
 use kanban\metier\Projet;
+use kanban\metier\User;
 
 class DaoKanban {
     private \PDO $conn;
@@ -28,25 +29,17 @@ class DaoKanban {
         }
         return $supProjets;
     }
-
-    public function getSupProjets() : array {
-        $cursor = $this->conn->query(Requetes::SUPPROJETSLIST_GET);
-        $supProjets = array();
-        while ($row = $cursor->fetch(\PDO::FETCH_OBJ)) {
-            $supProjets[] = new SupProjet($row->id_modulex, $row->id_projet, $row->id_supprojet, $row->date_creation_supprojet, $row->coul_supprojet, $row->nom_module_projet, $row->id_icone);
-        }
-        return $supProjets;
-    }
     
     public function getUser() {
         $cursor = $this->conn->query(Requetes::USERS_GET);
         $users = array();
         while ($row = $cursor->fetch(\PDO::FETCH_OBJ)) {
             //var_dump($row);
-            $users[] = new GetUser($row->id_user, $row->username, $row->nom_user, $row->prenom_user, $row->avatar_user, $row->email_user, $row->pass_word, $row->date_creation);
+            $users[] = new getUser($row->id_user, $row->username, $row->nom_user, $row->prenom_user, $row->avatar_user, $row->email_user, $row->pass_word, $row->date_creation);
         }
         return $users;
     }
+
 
     // Récupérer la liste des projets
     public function getProjets() : array {
@@ -56,6 +49,16 @@ class DaoKanban {
             $projets[] = new Projet($row->duree_projet, $row->date_debut_projet, $row->desc_projet, $row->lib_projet, (int)$row->id_user, (int)$row->id_projet);
         } 
         return $projets;
+    }
+
+    // Récupérer la liste des utilisateurs
+    public function getUsers() : array {
+        $cursor = $this->conn->query(Requetes::USERS_GET);
+        $users = [];
+        while ($row = $cursor->fetch(\PDO::FETCH_OBJ)) {
+            $users[] = new User((int)$row->id_user, $row->username, $row->nom_user, $row->prenom_user, $row->avatar_user, $row->email_user, $row->pass_word, $row->date_creation, (int)$row->id_secteur);
+        }  
+        return $users;
     }
 
 // ***** GetByID ****** //
@@ -169,6 +172,55 @@ class DaoKanban {
             echo "Erreur lors de l'ajout du projet.";
         }
         return $id_projet;
+
+    }
+
+    public function addUser(User $user): int {
+        //$id_projet = $projet->getIdProjet();
+        //$id_user = $user->getIdUser();
+        $username = $user->getUsername();
+        $nom_user = $user->getNomUser();
+        $prenom_user = $user->getPrenomUser();
+        $avatar_user = $user->getAvatar();
+        $email_user = $user->getEmail();
+        $pass_word = $user->getPassword();
+        $date_creation = $user->getDateCrea();
+        //$id_secteur = $user->getIDSecteur();
+
+        // Prépare la requête d'insertion
+        $query  = $this->conn->prepare("INSERT INTO utilisateur (username, nom_user, prenom_user, avatar_user, email_user, pass_word, date_creation) VALUES (:username, :nom_user, :prenom_user, :avatar_user, :email_user, :pass_word, :date_creation)");
+        
+        // Lie les paramètres
+        //$query->bindValue(':id_projet',          $id_projet,              \PDO::PARAM_INT);
+        //$query->bindValue(':id_user',           $id_user,           \PDO::PARAM_INT);
+        $query->bindValue(':username',          $username,          \PDO::PARAM_STR);
+        $query->bindValue(':nom_user',          $nom_user,          \PDO::PARAM_STR);
+        $query->bindValue(':prenom_user',       $prenom_user,       \PDO::PARAM_STR);
+        $query->bindValue(':avatar_user',       $avatar_user,       \PDO::PARAM_STR);
+        $query->bindValue(':email_user',        $email_user,        \PDO::PARAM_STR);
+        $query->bindValue(':pass_word',         $pass_word,         \PDO::PARAM_STR);
+        $query->bindValue(':date_creation',     $date_creation,     \PDO::PARAM_STR);
+        //$query->bindValue(':id_secteur',        $id_secteur,        \PDO::PARAM_INT);
+
+        // Exécute la requête et retourne l'ID inséré
+        
+        // if ($query->execute()) {
+        //     $id_user = $this->conn->lastInsertId();
+        //     echo "L'utilisateur' a été ajouté avec succès.";
+        // } else {
+        //     $id_projet=0;
+        //     echo "Erreur lors de l'ajout de l'utilisateur.";
+        // }
+        // return $id_user;
+
+        if ($query->execute()) {
+            error_log("User added successfully");
+            return (int)$this->conn->lastInsertId();
+        } else {
+            $errorInfo = $query->errorInfo();
+    error_log("Error adding user: " . implode(", ", $errorInfo));
+    throw new \Exception("Erreur lors de l'ajout de l'utilisateur : " . $errorInfo[2]);
+        }
 
     }
 }

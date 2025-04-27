@@ -2,11 +2,11 @@
 namespace kanban\dao;
 
 class Requetes {
-    // private \PDO $conn;
-    // // je déclare le constructeur qui permet de regrouper les méthodes $conn et $requete
-    // public function __construct() {
-    // $this->conn = Database::getConnection();
-    // }        
+    private \PDO $conn;
+    // je déclare le constructeur qui permet de regrouper les méthodes $conn et $requete
+    public function __construct() {
+    $this->conn = Database::getConnection();
+    }        
     
     // /**
     //  * Récupérer la liste des icones
@@ -25,7 +25,6 @@ class Requetes {
     //  */
     //public const SUPPROJET_GET = "Select id_modulex, id_projet, id_supprojet, date_creation_supprojet, coul_supprojet, nom_module_projet, id_icone";
     public const SUPPROJETS_GET = "SELECT id_modulex, id_projet, id_supprojet, date_creation_supprojet, coul_supprojet, nom_module_projet, id_icone from SupProjet order by id_supprojet";
-    public const SUPPROJETSLIST_GET = "SELECT id_supprojet, date_creation_supprojet, coul_supprojet, nom_module_projet, id_icone from SupProjet order by id_supprojet";
     public const PROJETS_GET = "SELECT id_projet, duree_projet, date_debut_projet, desc_projet, lib_projet, id_user FROM Projet";
     
     //public const PROJET_ADD = "INSERT INTO Projet (duree_projet, date_debut_projet, desc_projet, lib_projet, id_user) VALUES (:duree_projet, :date_debut_projet, :desc_projet, :lib_projet, :id_user)";
